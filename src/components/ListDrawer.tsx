@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useList } from "@/context/ListContext";
 import { useAiAssistant } from "@/context/AiAssistantContext";
 import { getProductById, getCartProductById, formatQuantity, getQuantityStep } from "@/data/catalog";
-import ClearanceSection from "./ClearanceSection";
 
 const round = (n: number) => Math.round(n * 10) / 10;
 
@@ -27,6 +27,7 @@ export default function ListDrawer() {
     restoreItem,
     clearRemoved,
   } = useList();
+  const router = useRouter();
   const [showRemoved, setShowRemoved] = useState(false);
   const [step, setStep] = useState<"list" | "checkout">("list");
   const [address, setAddress] = useState("");
@@ -91,6 +92,11 @@ export default function ListDrawer() {
       max: `https://max.ru/share?text=${text}`,
     };
     window.open(urls[channel], "_blank");
+  };
+
+  const goToClearance = () => {
+    handleClose();
+    router.push("/catalog");
   };
 
   const handlePhoneRequest = () => {
@@ -193,9 +199,6 @@ export default function ListDrawer() {
 
         {step === "list" ? (
           <div className="flex-1 overflow-y-auto p-4">
-            <div className="mb-4">
-              <ClearanceSection />
-            </div>
             {items.length === 0 ? (
               <div className="flex h-full flex-col items-center justify-center gap-2 text-center text-muted">
                 <span className="text-4xl">🧺</span>
@@ -272,6 +275,13 @@ export default function ListDrawer() {
                 <span aria-hidden>✨</span> Что ещё может понадобиться?
               </button>
             )}
+
+            <button
+              onClick={goToClearance}
+              className="mt-3 flex w-full items-center justify-center gap-2 rounded-[10px] bg-green-600 px-4 py-3 text-sm font-bold text-white shadow-sm hover:shadow-md"
+            >
+              <span aria-hidden>🏷️</span> Зелёные ценники
+            </button>
           </div>
         ) : (
           <div className="flex-1 overflow-y-auto p-4">

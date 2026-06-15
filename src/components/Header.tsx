@@ -53,7 +53,7 @@ export default function Header() {
           </div>
 
           <div className="flex items-center gap-2 shrink-0">
-            <div className="hidden items-center gap-2 sm:flex">
+            <div className="hidden items-center gap-2 md:flex">
               <span className="rounded-[10px] bg-primary/10 px-3 py-1.5 text-sm font-semibold text-primary-dark">
                 г. Ялта
               </span>
