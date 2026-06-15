@@ -2,6 +2,7 @@ export interface Category {
   id: string;
   name: string;
   icon: string;
+  subcategories?: Category[];
 }
 
 export interface Product {
@@ -375,7 +376,28 @@ export function getProductById(id: string): Product | undefined {
 }
 
 export function getCategoryById(id: string): Category | undefined {
-  return categories.find((c) => c.id === id);
+  for (const c of categories) {
+    if (c.id === id) return c;
+    const sub = c.subcategories?.find((s) => s.id === id);
+    if (sub) return sub;
+  }
+  return undefined;
+}
+
+export function getCategoryDescendantIds(category: Category): string[] {
+  return [
+    category.id,
+    ...(category.subcategories?.map((s) => s.id) ?? []),
+  ];
+}
+
+export function productMatchesCategory(
+  product: Product,
+  categoryId: string
+): boolean {
+  const category = getCategoryById(categoryId);
+  if (!category) return product.categoryId === categoryId;
+  return getCategoryDescendantIds(category).includes(product.categoryId);
 }
 
 export function getRelatedProducts(product: Product): Product[] {

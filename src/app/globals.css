@@ -37,3 +37,22 @@ body {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+@keyframes cart-bump {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-primary) 60%, transparent);
+  }
+  30% {
+    transform: scale(1.12);
+    box-shadow: 0 0 0 8px color-mix(in srgb, var(--color-primary) 30%, transparent);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
+.animate-cart-bump {
+  animation: cart-bump 0.5s ease-out;
+}

@@ -136,7 +136,7 @@ export default function AiAssistant() {
     <>
       <button
         onClick={openAssistant}
-        className="fixed bottom-5 right-5 z-40 flex items-center gap-2 rounded-full bg-gradient-to-r from-[#7c5cff] to-[#a78bfa] px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-[#7c5cff]/30 transition hover:shadow-xl"
+        className="fixed bottom-32 right-5 z-40 flex items-center gap-2 rounded-full bg-gradient-to-r from-[#7c5cff] to-[#a78bfa] px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-[#7c5cff]/30 transition hover:shadow-xl"
       >
         <span className="text-lg" aria-hidden>
           ✨
@@ -168,13 +168,13 @@ export default function AiAssistant() {
                   <div className="min-w-0">
                     <h2 className="flex flex-wrap items-center gap-2 text-lg font-bold">
                       <span className="flex items-center gap-1.5">
-                        <span aria-hidden>✨</span> ИИ-помощник
+                        <span aria-hidden>✨</span> Волшебные рекомендации
                       </span>
                       <span className="rounded-full bg-white/20 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide">
                         beta
                       </span>
                     </h2>
-                    <p className="mt-0.5 text-xs text-white/80">
+                    <p className="mt-0.5 mb-1 text-xs text-white/80">
                       Подбираю то, что может понадобиться к вашему списку
                     </p>
                   </div>
@@ -209,7 +209,7 @@ export default function AiAssistant() {
                               {product.price} ₽ / {product.unit}
                             </p>
                           </div>
-                          <div className="flex shrink-0 flex-col gap-1">
+                          <div className="flex shrink-0 flex-col items-end gap-1">
                             <button
                               onClick={() => openPicker(product)}
                               className="rounded-full bg-[#7c5cff] px-3 py-1 text-xs font-bold text-white hover:bg-[#6a4ce0]"
@@ -218,9 +218,9 @@ export default function AiAssistant() {
                             </button>
                             <button
                               onClick={() => openReplacePicker(product)}
-                              className="rounded-full bg-[#7c5cff]/10 px-3 py-1 text-xs font-bold text-[#7c5cff] hover:bg-[#7c5cff]/20"
+                              className="text-xs font-semibold text-[#7c5cff] underline underline-offset-2 hover:text-[#6a4ce0]"
                             >
-                              🔄 Заменить
+                              🔄 Больше вариантов
                             </button>
                           </div>
                         </div>

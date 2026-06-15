@@ -4,11 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import SearchBar from "./SearchBar";
 import DeliveryZoneModal from "./DeliveryZoneModal";
-import { useList } from "@/context/ListContext";
 
 export default function Header() {
   const [zoneOpen, setZoneOpen] = useState(false);
-  const { totalCount, openList } = useList();
   const headerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -64,17 +62,6 @@ export default function Header() {
             >
               +7 979 047-47-34
             </a>
-            <button
-              onClick={openList}
-              className="relative rounded-full bg-primary-dark px-3 py-1.5 text-sm font-semibold text-white"
-            >
-              Список
-              {totalCount > 0 && (
-                <span className="absolute -right-2 -top-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-tomato px-1 text-xs font-bold text-white">
-                  {totalCount}
-                </span>
-              )}
-            </button>
           </div>
         </div>
 

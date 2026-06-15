@@ -7,6 +7,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ListDrawer from "@/components/ListDrawer";
 import AiAssistant from "@/components/AiAssistant";
+import FloatingCartButton from "@/components/FloatingCartButton";
 
 const manrope = Manrope({
   variable: "--font-manrope",
@@ -34,6 +35,7 @@ export default function RootLayout({
             <Footer />
             <ListDrawer />
             <AiAssistant />
+            <FloatingCartButton />
           </AiAssistantProvider>
         </ListProvider>
       </body>
