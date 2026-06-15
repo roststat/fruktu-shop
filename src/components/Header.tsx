@@ -35,8 +35,14 @@ export default function Header() {
         <div className="flex items-center justify-between gap-3">
           <Link href="/" className="flex items-center gap-2 shrink-0">
             <span className="text-2xl">🧺</span>
-            <span className="text-lg font-extrabold text-primary-dark">
-              Схожу на рынок
+            <span className="flex flex-col leading-tight">
+              <span className="text-lg font-extrabold text-primary-dark">
+                Схожу на рынок
+              </span>
+              <span className="flex items-center gap-1 rounded-full bg-accent/15 px-2 py-0.5 text-[11px] font-bold text-accent">
+                <span aria-hidden>🏅</span>
+                Честный продавец
+              </span>
             </span>
           </Link>
 
