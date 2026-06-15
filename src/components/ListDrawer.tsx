@@ -33,6 +33,7 @@ export default function ListDrawer() {
   const [address, setAddress] = useState("");
   const [addressError, setAddressError] = useState(false);
   const [phoneRequested, setPhoneRequested] = useState(false);
+  const [sending, setSending] = useState(false);
   const { openAssistant } = useAiAssistant();
 
   useEffect(() => {
@@ -79,15 +80,35 @@ export default function ListDrawer() {
     ].join("\n");
   };
 
-  const handleSend = (channel: "telegram" | "max" | "whatsapp") => {
+  const handleSend = async (channel: "telegram" | "max" | "whatsapp") => {
     if (!address.trim()) {
       setAddressError(true);
       return;
     }
     setAddressError(false);
+
+    if (channel === "telegram") {
+      setSending(true);
+      try {
+        const res = await fetch("/api/orders", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ items, address: address.trim() }),
+        });
+        if (!res.ok) throw new Error("failed");
+        const { id } = await res.json();
+        window.open(`https://t.me/fruktu_bot?start=order_${id}`, "_blank");
+      } catch {
+        setAddressError(false);
+        alert("Не получилось отправить список. Попробуйте ещё раз.");
+      } finally {
+        setSending(false);
+      }
+      return;
+    }
+
     const text = encodeURIComponent(buildMessage());
-    const urls: Record<typeof channel, string> = {
-      telegram: `https://t.me/share/url?text=${text}`,
+    const urls: Record<"max" | "whatsapp", string> = {
       whatsapp: `https://wa.me/${SHOP_PHONE}?text=${text}`,
       max: `https://max.ru/share?text=${text}`,
     };
@@ -267,20 +288,30 @@ export default function ListDrawer() {
             {items.length > 0 && (
               <button
                 onClick={openAssistant}
-                className="relative mt-3 flex w-full items-center justify-center gap-2 overflow-hidden rounded-[10px] bg-gradient-to-r from-[#7c5cff] to-[#a78bfa] px-4 py-3 text-sm font-bold text-white shadow-sm shadow-[#7c5cff]/30 hover:shadow-md"
+                className="relative mt-3 flex w-full flex-col items-center justify-center gap-0.5 overflow-hidden rounded-[10px] border border-[#7c5cff] bg-white px-4 py-3 text-sm font-bold text-[#7c5cff] hover:bg-[#7c5cff]/5"
               >
-                <span className="pointer-events-none absolute -right-2 -top-3 text-4xl opacity-20" aria-hidden>
+                <span className="pointer-events-none absolute -right-2 -top-3 text-4xl opacity-10" aria-hidden>
                   ✨
                 </span>
-                <span aria-hidden>✨</span> Что ещё может понадобиться?
+                <span className="flex items-center gap-2">
+                  <span aria-hidden>✨</span> Что ещё может понадобиться?
+                </span>
+                <span className="text-xs font-normal text-[#7c5cff]/70">
+                  Волшебные рекомендации к вашему заказу
+                </span>
               </button>
             )}
 
             <button
               onClick={goToClearance}
-              className="mt-3 flex w-full items-center justify-center gap-2 rounded-[10px] bg-green-600 px-4 py-3 text-sm font-bold text-white shadow-sm hover:shadow-md"
+              className="mt-3 flex w-full flex-col items-center justify-center gap-0.5 rounded-[10px] border border-green-600 bg-white px-4 py-3 text-sm font-bold text-green-600 hover:bg-green-50"
             >
-              <span aria-hidden>🏷️</span> Зелёные ценники
+              <span className="flex items-center gap-2">
+                <span aria-hidden>🏷️</span> Зелёные ценники
+              </span>
+              <span className="text-xs font-normal text-green-600/70">
+                товары с непрезентабельным видом по сниженной цене
+              </span>
             </button>
           </div>
         ) : (
@@ -420,10 +451,11 @@ export default function ListDrawer() {
             <div className="grid grid-cols-3 gap-2">
               <button
                 onClick={() => handleSend("telegram")}
-                className="flex flex-col items-center gap-1 rounded-[10px] bg-[#229ED9]/10 px-2 py-3 text-xs font-semibold text-[#229ED9]"
+                disabled={sending}
+                className="flex flex-col items-center gap-1 rounded-[10px] bg-[#229ED9]/10 px-2 py-3 text-xs font-semibold text-[#229ED9] disabled:opacity-60"
               >
                 <span className="text-2xl">✈️</span>
-                Telegram
+                {sending ? "Отправка…" : "Telegram"}
               </button>
               <button
                 onClick={() => handleSend("max")}
