@@ -1,18 +1,22 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   categories,
   products,
   getCategoryById,
   productMatchesCategory,
+  textMatchesQuery,
 } from "@/data/catalog";
 import ProductCard from "./ProductCard";
+import ClearanceSection from "./ClearanceSection";
 
 export default function CatalogClient() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const initialCategory = searchParams.get("category");
+  const searchQuery = searchParams.get("q")?.trim().toLowerCase() ?? "";
   const [activeCategory, setActiveCategory] = useState<string | null>(
     initialCategory
   );
@@ -22,9 +26,13 @@ export default function CatalogClient() {
     ? getCategoryById(activeCategory)
     : null;
 
-  const filtered = activeCategory
-    ? products.filter((p) => productMatchesCategory(p, activeCategory))
-    : products;
+  const filtered = searchQuery
+    ? products.filter((p) => textMatchesQuery(p.name, searchQuery))
+    : activeCategory
+      ? products.filter((p) => productMatchesCategory(p, activeCategory))
+      : products;
+
+  const clearSearch = () => router.push("/catalog");
 
   const selectCategory = (id: string | null) => {
     setActiveCategory(id);
@@ -44,6 +52,10 @@ export default function CatalogClient() {
     <div className="mx-auto max-w-6xl px-4 py-6">
       <h1 className="mb-4 text-2xl font-extrabold">Каталог</h1>
 
+      <div className="mb-6">
+        <ClearanceSection />
+      </div>
+
       <div
         className="sticky z-30 -mx-4 mb-6 border-b border-black/5 bg-background/95 px-4 py-2 backdrop-blur"
         style={{ top: "var(--header-height, 0px)" }}
@@ -53,9 +65,11 @@ export default function CatalogClient() {
             onClick={() => setPickerOpen(true)}
             className="flex-1 truncate rounded-full bg-primary px-4 py-2 text-left text-sm font-semibold text-white"
           >
-            {activeCategoryObj
-              ? `${activeCategoryObj.icon} ${activeCategoryObj.name}`
-              : "Все товары"}
+            {searchQuery
+              ? `🔍 Результаты по «${searchQuery}»`
+              : activeCategoryObj
+                ? `${activeCategoryObj.icon} ${activeCategoryObj.name}`
+                : "Все товары"}
           </button>
           <button
             onClick={() => setPickerOpen(true)}
@@ -144,24 +158,40 @@ export default function CatalogClient() {
 
       {filtered.length === 0 && (
         <p className="py-12 text-center text-muted">
-          В этой категории пока нет товаров.
+          {searchQuery
+            ? "По вашему запросу ничего не найдено."
+            : "В этой категории пока нет товаров."}
         </p>
       )}
 
-      {activeCategoryObj && (
+      {searchQuery ? (
         <div className="fixed inset-x-0 bottom-5 z-40 flex justify-start pl-4 pr-28">
           <div className="flex max-w-full items-center gap-2 rounded-full bg-primary-dark py-2 pl-3 pr-1.5 text-sm font-semibold text-white shadow-lg">
-            <span className="truncate">
-              Фильтр: {activeCategoryObj.icon} {activeCategoryObj.name}
-            </span>
+            <span className="truncate">Поиск: «{searchQuery}»</span>
             <button
-              onClick={() => selectCategory(null)}
+              onClick={clearSearch}
               className="shrink-0 rounded-full bg-white/15 px-3 py-1 text-xs font-bold hover:bg-white/25"
             >
               Все ✕
             </button>
           </div>
         </div>
+      ) : (
+        activeCategoryObj && (
+          <div className="fixed inset-x-0 bottom-5 z-40 flex justify-start pl-4 pr-28">
+            <div className="flex max-w-full items-center gap-2 rounded-full bg-primary-dark py-2 pl-3 pr-1.5 text-sm font-semibold text-white shadow-lg">
+              <span className="truncate">
+                Фильтр: {activeCategoryObj.icon} {activeCategoryObj.name}
+              </span>
+              <button
+                onClick={() => selectCategory(null)}
+                className="shrink-0 rounded-full bg-white/15 px-3 py-1 text-xs font-bold hover:bg-white/25"
+              >
+                Все ✕
+              </button>
+            </div>
+          </div>
+        )
       )}
     </div>
   );

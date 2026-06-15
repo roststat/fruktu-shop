@@ -14,6 +14,10 @@ export interface Product {
   icon: string;
   seasonal?: boolean;
   relatedIds?: string[];
+  clearance?: {
+    price: number;
+    reason: string;
+  };
 }
 
 export const categories: Category[] = [
@@ -41,6 +45,10 @@ export const products: Product[] = [
     icon: "🥒",
     seasonal: true,
     relatedIds: ["tomato", "dill", "smetana"],
+    clearance: {
+      price: 90,
+      reason: "Помятые, но свежие — берём сегодня",
+    },
   },
   {
     id: "tomato",
@@ -237,6 +245,10 @@ export const products: Product[] = [
     unit: "шт",
     icon: "🍞",
     relatedIds: ["butter", "cheese-hard"],
+    clearance: {
+      price: 40,
+      reason: "Срок годности — сегодня",
+    },
   },
   {
     id: "lavash",
@@ -371,6 +383,35 @@ export const products: Product[] = [
   },
 ];
 
+function levenshteinDistance(a: string, b: string): number {
+  const dp: number[][] = Array.from({ length: a.length + 1 }, () =>
+    new Array(b.length + 1).fill(0)
+  );
+  for (let i = 0; i <= a.length; i++) dp[i][0] = i;
+  for (let j = 0; j <= b.length; j++) dp[0][j] = j;
+  for (let i = 1; i <= a.length; i++) {
+    for (let j = 1; j <= b.length; j++) {
+      dp[i][j] =
+        a[i - 1] === b[j - 1]
+          ? dp[i - 1][j - 1]
+          : 1 + Math.min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]);
+    }
+  }
+  return dp[a.length][b.length];
+}
+
+/** Matches text against a query, tolerating typos (e.g. "марковь" → "морковь"). */
+export function textMatchesQuery(text: string, query: string): boolean {
+  const t = text.toLowerCase();
+  const q = query.trim().toLowerCase();
+  if (!q) return false;
+  if (t.includes(q)) return true;
+  if (q.length < 3) return false;
+
+  const threshold = q.length <= 4 ? 1 : q.length <= 8 ? 2 : 3;
+  return t.split(/\s+/).some((word) => levenshteinDistance(word, q) <= threshold);
+}
+
 export function getProductById(id: string): Product | undefined {
   return products.find((p) => p.id === id);
 }
@@ -409,6 +450,10 @@ export function getRelatedProducts(product: Product): Product[] {
 
 export function getSeasonalProducts(): Product[] {
   return products.filter((p) => p.seasonal);
+}
+
+export function getClearanceProducts(): Product[] {
+  return products.filter((p) => p.clearance);
 }
 
 export function isWeightProduct(product: Product): boolean {

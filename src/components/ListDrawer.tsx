@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useList } from "@/context/ListContext";
 import { useAiAssistant } from "@/context/AiAssistantContext";
 import { getProductById, formatQuantity, getQuantityStep } from "@/data/catalog";
+import ClearanceSection from "./ClearanceSection";
 
 const round = (n: number) => Math.round(n * 10) / 10;
 
@@ -191,6 +192,9 @@ export default function ListDrawer() {
 
         {step === "list" ? (
           <div className="flex-1 overflow-y-auto p-4">
+            <div className="mb-4">
+              <ClearanceSection />
+            </div>
             {items.length === 0 ? (
               <div className="flex h-full flex-col items-center justify-center gap-2 text-center text-muted">
                 <span className="text-4xl">🧺</span>

@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { categories, products } from "@/data/catalog";
+import { categories, products, textMatchesQuery } from "@/data/catalog";
 
 export default function SearchBar({ className = "" }: { className?: string }) {
   const [query, setQuery] = useState("");
@@ -15,11 +15,11 @@ export default function SearchBar({ className = "" }: { className?: string }) {
     if (!q) return { products: [], categories: [] };
 
     const matchedProducts = products
-      .filter((p) => p.name.toLowerCase().includes(q))
+      .filter((p) => textMatchesQuery(p.name, q))
       .slice(0, 5);
 
     const matchedCategories = categories
-      .filter((c) => c.name.toLowerCase().includes(q))
+      .filter((c) => textMatchesQuery(c.name, q))
       .slice(0, 3);
 
     return { products: matchedProducts, categories: matchedCategories };
@@ -47,10 +47,18 @@ export default function SearchBar({ className = "" }: { className?: string }) {
     router.push(`/catalog?category=${categoryId}`);
   };
 
-  const goToProduct = (productId: string) => {
+  const goToProduct = (productName: string) => {
     setQuery("");
     setFocused(false);
-    router.push(`/product/${productId}`);
+    router.push(`/catalog?q=${encodeURIComponent(productName)}`);
+  };
+
+  const goToSearch = (q: string) => {
+    const trimmed = q.trim();
+    if (!trimmed) return;
+    setQuery("");
+    setFocused(false);
+    router.push(`/catalog?q=${encodeURIComponent(trimmed)}`);
   };
 
   return (
@@ -60,6 +68,9 @@ export default function SearchBar({ className = "" }: { className?: string }) {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         onFocus={() => setFocused(true)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") goToSearch(query);
+        }}
         placeholder="Название товара или категории"
         className="w-full rounded-full border border-black/10 bg-white px-4 py-2.5 text-sm shadow-sm outline-none focus:border-primary"
       />
@@ -90,7 +101,7 @@ export default function SearchBar({ className = "" }: { className?: string }) {
               {suggestions.products.map((p) => (
                 <button
                   key={p.id}
-                  onClick={() => goToProduct(p.id)}
+                  onClick={() => goToProduct(p.name)}
                   className="flex w-full items-center justify-between gap-2 rounded-xl px-2 py-2 text-left text-sm hover:bg-primary/5"
                 >
                   <span className="flex items-center gap-2">
@@ -104,6 +115,12 @@ export default function SearchBar({ className = "" }: { className?: string }) {
               ))}
             </div>
           )}
+          <button
+            onClick={() => goToSearch(query)}
+            className="flex w-full items-center justify-center gap-2 border-t border-black/5 px-2 py-2.5 text-sm font-semibold text-primary-dark hover:bg-primary/5"
+          >
+            🔍 Показать все товары по запросу «{query.trim()}»
+          </button>
         </div>
       )}
     </div>
