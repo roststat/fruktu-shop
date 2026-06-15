@@ -147,6 +147,22 @@ export default function CatalogClient() {
           В этой категории пока нет товаров.
         </p>
       )}
+
+      {activeCategoryObj && (
+        <div className="fixed inset-x-0 bottom-5 z-40 flex justify-start pl-4 pr-28">
+          <div className="flex max-w-full items-center gap-2 rounded-full bg-primary-dark py-2 pl-3 pr-1.5 text-sm font-semibold text-white shadow-lg">
+            <span className="truncate">
+              Фильтр: {activeCategoryObj.icon} {activeCategoryObj.name}
+            </span>
+            <button
+              onClick={() => selectCategory(null)}
+              className="shrink-0 rounded-full bg-white/15 px-3 py-1 text-xs font-bold hover:bg-white/25"
+            >
+              Все ✕
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
