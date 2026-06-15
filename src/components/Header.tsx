@@ -2,13 +2,26 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Script from "next/script";
 import SearchBar from "./SearchBar";
 import CategoryMenu from "./CategoryMenu";
 import DeliveryZoneModal from "./DeliveryZoneModal";
+import AccountMenu from "./AccountMenu";
+import { detectPlatform, getMessengerUser, initMessengerApp, type MessengerUser } from "@/lib/messengerBridge";
+import { captureReferralCode } from "@/lib/referral";
 
 export default function Header() {
   const [zoneOpen, setZoneOpen] = useState(false);
+  const [messengerUser, setMessengerUser] = useState<MessengerUser | null>(null);
+  const [inMessengerApp, setInMessengerApp] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    initMessengerApp();
+    setInMessengerApp(detectPlatform() !== null);
+    setMessengerUser(getMessengerUser());
+    captureReferralCode();
+  }, []);
 
   useEffect(() => {
     const el = headerRef.current;
@@ -28,10 +41,12 @@ export default function Header() {
   }, []);
 
   return (
-    <header
-      ref={headerRef}
-      className="sticky top-0 z-40 border-b border-black/5 bg-background/95 backdrop-blur"
-    >
+    <>
+      <Script src="https://telegram.org/js/telegram-web-app.js" strategy="beforeInteractive" />
+      <header
+        ref={headerRef}
+        className="sticky top-0 z-40 border-b border-black/5 bg-background/95 backdrop-blur"
+      >
       <div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-3">
         <div className="flex items-center justify-between gap-3">
           <Link href="/" className="flex items-center gap-2 shrink-0">
@@ -53,6 +68,7 @@ export default function Header() {
           </div>
 
           <div className="flex items-center gap-2 shrink-0">
+            {inMessengerApp && <AccountMenu user={messengerUser} />}
             <div className="hidden items-center gap-2 md:flex">
               <span className="rounded-[10px] bg-primary/10 px-3 py-1.5 text-sm font-semibold text-primary-dark">
                 г. Ялта
@@ -98,6 +114,7 @@ export default function Header() {
       </div>
 
       <DeliveryZoneModal open={zoneOpen} onClose={() => setZoneOpen(false)} />
-    </header>
+      </header>
+    </>
   );
 }

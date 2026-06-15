@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useList } from "@/context/ListContext";
 import { useAiAssistant } from "@/context/AiAssistantContext";
 import { getProductById, getCartProductById, formatQuantity, getQuantityStep } from "@/data/catalog";
+import { getReferralCode } from "@/lib/referral";
 
 const round = (n: number) => Math.round(n * 10) / 10;
 
@@ -93,7 +94,11 @@ export default function ListDrawer() {
         const res = await fetch("/api/orders", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ items, address: address.trim() }),
+          body: JSON.stringify({
+            items,
+            address: address.trim(),
+            referredBy: getReferralCode(),
+          }),
         });
         if (!res.ok) throw new Error("failed");
         const { id } = await res.json();

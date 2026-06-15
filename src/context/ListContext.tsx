@@ -22,6 +22,7 @@ interface ListContextValue {
   addItem: (productId: string, quantity?: number) => void;
   removeItem: (productId: string) => void;
   setQuantity: (productId: string, quantity: number) => void;
+  replaceItems: (items: ListItem[]) => void;
   getQuantity: (productId: string) => number;
   totalCount: number;
   totalQuantity: number;
@@ -113,6 +114,11 @@ export function ListProvider({ children }: { children: React.ReactNode }) {
     });
   };
 
+  const replaceItems = (newItems: ListItem[]) => {
+    setItems(newItems);
+    setRemovedItems([]);
+  };
+
   const getQuantity = (productId: string) =>
     items.find((i) => i.productId === productId)?.quantity ?? 0;
 
@@ -149,6 +155,7 @@ export function ListProvider({ children }: { children: React.ReactNode }) {
     addItem,
     removeItem,
     setQuantity,
+    replaceItems,
     getQuantity,
     totalCount,
     totalQuantity,

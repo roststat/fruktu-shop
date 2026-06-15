@@ -3,6 +3,8 @@ import { db } from "@/lib/db";
 import { orders } from "@/lib/db/schema";
 import { sendTelegramMessage } from "@/lib/telegram";
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://fruktu.ru";
+
 export async function POST(request: Request, ctx: RouteContext<"/api/orders/[id]/finalize">) {
   const { id } = await ctx.params;
   const secret = request.headers.get("x-admin-secret");
@@ -34,8 +36,8 @@ export async function POST(request: Request, ctx: RouteContext<"/api/orders/[id]
   if (order.messengerPlatform === "telegram" && order.messengerChatId) {
     await sendTelegramMessage(
       order.messengerChatId,
-      `📦 Ваш заказ собран!\n\nИтоговая сумма: <b>${finalTotal} ₽</b>\n\nОплатите по ссылке, чтобы мы передали заказ курьеру:`,
-      [[{ text: "💳 Оплатить", url: paymentUrl }]]
+      `📦 Ваш заказ собран!\n\nИтоговая сумма: <b>${finalTotal} ₽</b>\n\nУкажите имя и телефон для курьера и перейдите к оплате:`,
+      [[{ text: "💳 К оплате", web_app: { url: `${SITE_URL}/order/${id}` } }]]
     ).catch((err) => console.error("Failed to notify customer", err));
   }
 

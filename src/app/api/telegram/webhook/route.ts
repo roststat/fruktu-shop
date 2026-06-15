@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { and, desc, eq, ne } from "drizzle-orm";
 import { db } from "@/lib/db";
 import { orders } from "@/lib/db/schema";
 import { sendTelegramMessage } from "@/lib/telegram";
@@ -23,10 +23,25 @@ export async function POST(request: Request) {
     const orderId = payload.startsWith("order_") ? payload.slice("order_".length) : null;
 
     if (!orderId) {
-      await sendTelegramMessage(
-        chatId,
-        "Привет! Это бот «Схожу на рынок». Чтобы оформить заказ, соберите список на сайте и нажмите «Отправить в Telegram»."
-      );
+      const [lastOrder] = await db
+        .select()
+        .from(orders)
+        .where(and(eq(orders.messengerChatId, String(chatId)), ne(orders.status, "new")))
+        .orderBy(desc(orders.createdAt))
+        .limit(1);
+
+      if (lastOrder) {
+        await sendTelegramMessage(
+          chatId,
+          `Привет! Это бот «Схожу на рынок».\n\nМожете повторить ваш прошлый заказ (${lastOrder.itemsCount} товаров на ~${lastOrder.estimatedTotal} ₽) или собрать новый список на сайте.`,
+          [[{ text: "🔁 Повторить прошлый заказ", web_app: { url: `${SITE_URL}/repeat/${lastOrder.id}` } }]]
+        );
+      } else {
+        await sendTelegramMessage(
+          chatId,
+          "Привет! Это бот «Схожу на рынок». Чтобы оформить заказ, соберите список на сайте и нажмите «Отправить в Telegram»."
+        );
+      }
       return Response.json({ ok: true });
     }
 
