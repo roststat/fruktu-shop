@@ -1,0 +1,406 @@
+export interface Category {
+  id: string;
+  name: string;
+  icon: string;
+}
+
+export interface Product {
+  id: string;
+  name: string;
+  categoryId: string;
+  price: number;
+  unit: string;
+  icon: string;
+  seasonal?: boolean;
+  relatedIds?: string[];
+}
+
+export const categories: Category[] = [
+  { id: "veg", name: "Овощи, фрукты, ягоды, зелень", icon: "🍅" },
+  { id: "dairy", name: "Молочные продукты, масло, яйцо", icon: "🥛" },
+  { id: "cheese", name: "Сыры", icon: "🧀" },
+  { id: "meat", name: "Мясо, птица", icon: "🍗" },
+  { id: "fish", name: "Рыба и морепродукты", icon: "🐟" },
+  { id: "bread", name: "Хлеб", icon: "🍞" },
+  { id: "frozen", name: "Замороженные продукты", icon: "🧊" },
+  { id: "canned", name: "Консервы", icon: "🥫" },
+  { id: "tea", name: "Чай и кофе", icon: "☕" },
+  { id: "grains", name: "Крупы, макароны, мука", icon: "🌾" },
+  { id: "sauces", name: "Масла, соусы, сахар", icon: "🍯" },
+];
+
+export const products: Product[] = [
+  // Овощи, фрукты, ягоды, зелень
+  {
+    id: "cucumber",
+    name: "Огурцы грунтовые",
+    categoryId: "veg",
+    price: 145,
+    unit: "кг",
+    icon: "🥒",
+    seasonal: true,
+    relatedIds: ["tomato", "dill", "smetana"],
+  },
+  {
+    id: "tomato",
+    name: "Помидоры розовые",
+    categoryId: "veg",
+    price: 189,
+    unit: "кг",
+    icon: "🍅",
+    seasonal: true,
+    relatedIds: ["cucumber", "basil", "cheese-feta"],
+  },
+  {
+    id: "cherry",
+    name: "Черешня",
+    categoryId: "veg",
+    price: 420,
+    unit: "кг",
+    icon: "🍒",
+    seasonal: true,
+    relatedIds: ["apricot", "strawberry"],
+  },
+  {
+    id: "apricot",
+    name: "Абрикосы",
+    categoryId: "veg",
+    price: 280,
+    unit: "кг",
+    icon: "🍑",
+    seasonal: true,
+    relatedIds: ["cherry", "peach"],
+  },
+  {
+    id: "peach",
+    name: "Персики",
+    categoryId: "veg",
+    price: 320,
+    unit: "кг",
+    icon: "🍑",
+    seasonal: true,
+    relatedIds: ["apricot", "cherry"],
+  },
+  {
+    id: "strawberry",
+    name: "Клубника",
+    categoryId: "veg",
+    price: 350,
+    unit: "кг",
+    icon: "🍓",
+    seasonal: true,
+    relatedIds: ["cherry", "smetana"],
+  },
+  {
+    id: "young-potato",
+    name: "Картофель молодой",
+    categoryId: "veg",
+    price: 95,
+    unit: "кг",
+    icon: "🥔",
+    seasonal: true,
+    relatedIds: ["dill", "butter"],
+  },
+  {
+    id: "dill",
+    name: "Укроп",
+    categoryId: "veg",
+    price: 60,
+    unit: "пучок",
+    icon: "🌿",
+    relatedIds: ["cucumber", "tomato"],
+  },
+  {
+    id: "basil",
+    name: "Базилик",
+    categoryId: "veg",
+    price: 70,
+    unit: "пучок",
+    icon: "🌱",
+    relatedIds: ["tomato", "cheese-feta"],
+  },
+
+  // Молочные продукты, масло, яйцо
+  {
+    id: "milk",
+    name: "Молоко фермерское",
+    categoryId: "dairy",
+    price: 110,
+    unit: "л",
+    icon: "🥛",
+    relatedIds: ["smetana", "eggs"],
+  },
+  {
+    id: "smetana",
+    name: "Сметана 20%",
+    categoryId: "dairy",
+    price: 130,
+    unit: "400 г",
+    icon: "🥣",
+    relatedIds: ["cucumber", "strawberry"],
+  },
+  {
+    id: "eggs",
+    name: "Яйца куриные С1",
+    categoryId: "dairy",
+    price: 140,
+    unit: "10 шт",
+    icon: "🥚",
+    relatedIds: ["butter", "milk"],
+  },
+  {
+    id: "butter",
+    name: "Масло сливочное 82.5%",
+    categoryId: "dairy",
+    price: 220,
+    unit: "180 г",
+    icon: "🧈",
+    relatedIds: ["young-potato", "bread-white"],
+  },
+
+  // Сыры
+  {
+    id: "cheese-feta",
+    name: "Сыр фермерский (брынза)",
+    categoryId: "cheese",
+    price: 480,
+    unit: "кг",
+    icon: "🧀",
+    relatedIds: ["tomato", "basil"],
+  },
+  {
+    id: "cheese-hard",
+    name: "Сыр твёрдый выдержанный",
+    categoryId: "cheese",
+    price: 690,
+    unit: "кг",
+    icon: "🧀",
+    relatedIds: ["bread-white", "wine-sauce"],
+  },
+
+  // Мясо, птица
+  {
+    id: "chicken",
+    name: "Курица домашняя",
+    categoryId: "meat",
+    price: 360,
+    unit: "кг",
+    icon: "🍗",
+    relatedIds: ["young-potato", "spices"],
+  },
+  {
+    id: "pork",
+    name: "Свинина (шея)",
+    categoryId: "meat",
+    price: 520,
+    unit: "кг",
+    icon: "🥩",
+    relatedIds: ["spices", "young-potato"],
+  },
+  {
+    id: "minced-meat",
+    name: "Фарш домашний",
+    categoryId: "meat",
+    price: 480,
+    unit: "кг",
+    icon: "🥩",
+    relatedIds: ["spices", "pasta"],
+  },
+
+  // Рыба и морепродукты
+  {
+    id: "trout",
+    name: "Форель свежая",
+    categoryId: "fish",
+    price: 750,
+    unit: "кг",
+    icon: "🐟",
+    relatedIds: ["dill", "olive-oil"],
+  },
+  {
+    id: "mussels",
+    name: "Мидии черноморские",
+    categoryId: "fish",
+    price: 390,
+    unit: "кг",
+    icon: "🦪",
+    relatedIds: ["wine-sauce", "dill"],
+  },
+
+  // Хлеб
+  {
+    id: "bread-white",
+    name: "Хлеб белый подовый",
+    categoryId: "bread",
+    price: 75,
+    unit: "шт",
+    icon: "🍞",
+    relatedIds: ["butter", "cheese-hard"],
+  },
+  {
+    id: "lavash",
+    name: "Лаваш тонкий",
+    categoryId: "bread",
+    price: 60,
+    unit: "шт",
+    icon: "🫓",
+    relatedIds: ["cheese-feta", "chicken"],
+  },
+
+  // Замороженные продукты
+  {
+    id: "frozen-berries",
+    name: "Ягодная смесь",
+    categoryId: "frozen",
+    price: 320,
+    unit: "400 г",
+    icon: "🧊",
+    relatedIds: ["smetana"],
+  },
+  {
+    id: "frozen-dumplings",
+    name: "Пельмени домашние",
+    categoryId: "frozen",
+    price: 380,
+    unit: "кг",
+    icon: "🥟",
+    relatedIds: ["smetana"],
+  },
+
+  // Консервы
+  {
+    id: "canned-tomatoes",
+    name: "Томаты в собственном соку",
+    categoryId: "canned",
+    price: 150,
+    unit: "0.5 л",
+    icon: "🥫",
+    relatedIds: ["pasta"],
+  },
+  {
+    id: "canned-beans",
+    name: "Фасоль консервированная",
+    categoryId: "canned",
+    price: 110,
+    unit: "0.4 кг",
+    icon: "🥫",
+  },
+
+  // Чай и кофе
+  {
+    id: "coffee",
+    name: "Кофе в зёрнах",
+    categoryId: "tea",
+    price: 650,
+    unit: "250 г",
+    icon: "☕",
+  },
+  {
+    id: "tea-herbal",
+    name: "Крымский травяной чай",
+    categoryId: "tea",
+    price: 240,
+    unit: "100 г",
+    icon: "🍵",
+  },
+
+  // Крупы, макароны, мука
+  {
+    id: "pasta",
+    name: "Макароны твёрдых сортов",
+    categoryId: "grains",
+    price: 95,
+    unit: "450 г",
+    icon: "🍝",
+    relatedIds: ["canned-tomatoes", "minced-meat"],
+  },
+  {
+    id: "rice",
+    name: "Рис длиннозёрный",
+    categoryId: "grains",
+    price: 130,
+    unit: "кг",
+    icon: "🍚",
+    relatedIds: ["mussels", "chicken"],
+  },
+  {
+    id: "flour",
+    name: "Мука пшеничная",
+    categoryId: "grains",
+    price: 80,
+    unit: "кг",
+    icon: "🌾",
+  },
+
+  // Масла, соусы, сахар
+  {
+    id: "olive-oil",
+    name: "Оливковое масло extra virgin",
+    categoryId: "sauces",
+    price: 590,
+    unit: "0.5 л",
+    icon: "🫒",
+    relatedIds: ["trout", "tomato"],
+  },
+  {
+    id: "wine-sauce",
+    name: "Соус винный для мидий",
+    categoryId: "sauces",
+    price: 210,
+    unit: "0.2 л",
+    icon: "🍷",
+    relatedIds: ["mussels"],
+  },
+  {
+    id: "sugar",
+    name: "Сахар",
+    categoryId: "sauces",
+    price: 75,
+    unit: "кг",
+    icon: "🧂",
+  },
+  {
+    id: "spices",
+    name: "Специи для мяса",
+    categoryId: "sauces",
+    price: 140,
+    unit: "набор",
+    icon: "🧂",
+    relatedIds: ["chicken", "pork"],
+  },
+];
+
+export function getProductById(id: string): Product | undefined {
+  return products.find((p) => p.id === id);
+}
+
+export function getCategoryById(id: string): Category | undefined {
+  return categories.find((c) => c.id === id);
+}
+
+export function getRelatedProducts(product: Product): Product[] {
+  if (!product.relatedIds) return [];
+  return product.relatedIds
+    .map((id) => getProductById(id))
+    .filter((p): p is Product => Boolean(p));
+}
+
+export function getSeasonalProducts(): Product[] {
+  return products.filter((p) => p.seasonal);
+}
+
+export function isWeightProduct(product: Product): boolean {
+  return product.unit === "кг";
+}
+
+export function getDefaultQuantity(product: Product): number {
+  return isWeightProduct(product) ? 0.6 : 1;
+}
+
+export function getQuantityStep(product: Product): number {
+  return isWeightProduct(product) ? 0.2 : 1;
+}
+
+export function formatQuantity(product: Product, quantity: number): string {
+  return isWeightProduct(product) ? `${quantity.toFixed(1)} кг` : `${quantity}`;
+}

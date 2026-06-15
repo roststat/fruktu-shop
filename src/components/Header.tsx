@@ -1,0 +1,107 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import SearchBar from "./SearchBar";
+import DeliveryZoneModal from "./DeliveryZoneModal";
+import { useList } from "@/context/ListContext";
+
+export default function Header() {
+  const [zoneOpen, setZoneOpen] = useState(false);
+  const { totalCount, openList } = useList();
+  const headerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const el = headerRef.current;
+    if (!el) return;
+
+    const updateHeight = () => {
+      document.documentElement.style.setProperty(
+        "--header-height",
+        `${el.offsetHeight}px`
+      );
+    };
+
+    updateHeight();
+    const observer = new ResizeObserver(updateHeight);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <header
+      ref={headerRef}
+      className="sticky top-0 z-40 border-b border-black/5 bg-background/95 backdrop-blur"
+    >
+      <div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-3">
+        <div className="flex items-center justify-between gap-3">
+          <Link href="/" className="flex items-center gap-2 shrink-0">
+            <span className="text-2xl">🧺</span>
+            <span className="text-lg font-extrabold text-primary-dark">
+              Схожу на рынок
+            </span>
+          </Link>
+
+          <div className="hidden flex-1 md:block md:max-w-md">
+            <SearchBar />
+          </div>
+
+          <div className="flex items-center gap-2 shrink-0">
+            <div className="hidden items-center gap-2 sm:flex">
+              <span className="rounded-full bg-primary/10 px-3 py-1.5 text-sm font-semibold text-primary-dark">
+                г. Ялта
+              </span>
+              <button
+                onClick={() => setZoneOpen(true)}
+                className="rounded-full bg-accent/20 px-3 py-1.5 text-sm font-semibold text-accent hover:bg-accent/30"
+              >
+                Зона доставки
+              </button>
+            </div>
+            <a
+              href="tel:+79790474734"
+              className="hidden rounded-full bg-primary px-3 py-1.5 text-sm font-semibold text-white md:inline-block"
+            >
+              +7 979 047-47-34
+            </a>
+            <button
+              onClick={openList}
+              className="relative rounded-full bg-primary-dark px-3 py-1.5 text-sm font-semibold text-white"
+            >
+              Список
+              {totalCount > 0 && (
+                <span className="absolute -right-2 -top-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-tomato px-1 text-xs font-bold text-white">
+                  {totalCount}
+                </span>
+              )}
+            </button>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2 md:hidden">
+          <span className="shrink-0 rounded-full bg-primary/10 px-3 py-1.5 text-xs font-semibold text-primary-dark">
+            г. Ялта
+          </span>
+          <button
+            onClick={() => setZoneOpen(true)}
+            className="shrink-0 rounded-full bg-accent/20 px-3 py-1.5 text-xs font-semibold text-accent"
+          >
+            Зона доставки
+          </button>
+          <a
+            href="tel:+79790474734"
+            className="ml-auto shrink-0 rounded-full bg-primary/10 px-3 py-1.5 text-xs font-semibold text-primary-dark"
+          >
+            +7 979 047-47-34
+          </a>
+        </div>
+
+        <div className="md:hidden">
+          <SearchBar />
+        </div>
+      </div>
+
+      <DeliveryZoneModal open={zoneOpen} onClose={() => setZoneOpen(false)} />
+    </header>
+  );
+}
