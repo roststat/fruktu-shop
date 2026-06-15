@@ -27,7 +27,7 @@ export default function AddToListControl({
     return (
       <button
         onClick={() => addItem(productId, getDefaultQuantity(product))}
-        className="w-full rounded-full bg-primary px-4 py-3 text-sm font-bold text-white sm:w-fit"
+        className="w-full rounded-[10px] bg-primary px-4 py-3 text-sm font-bold text-white sm:w-fit"
       >
         Добавить в список
       </button>
@@ -36,10 +36,10 @@ export default function AddToListControl({
 
   return (
     <div className="flex flex-wrap items-center gap-3">
-      <div className="flex w-fit items-center gap-3 rounded-full bg-primary/10 px-3 py-2">
+      <div className="flex w-fit items-center gap-3 rounded-[10px] bg-primary/10 px-3 py-2">
         <button
           onClick={() => setQuantity(productId, round(quantity - step))}
-          className="h-9 w-9 rounded-full bg-white text-lg text-primary-dark shadow-sm"
+          className="h-9 w-9 rounded-[10px] bg-white text-lg text-primary-dark shadow-sm"
         >
           −
         </button>
@@ -48,7 +48,7 @@ export default function AddToListControl({
         </span>
         <button
           onClick={() => setQuantity(productId, round(quantity + step))}
-          className="h-9 w-9 rounded-full bg-white text-lg text-primary-dark shadow-sm"
+          className="h-9 w-9 rounded-[10px] bg-white text-lg text-primary-dark shadow-sm"
         >
           +
         </button>

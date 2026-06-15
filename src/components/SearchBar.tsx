@@ -72,10 +72,10 @@ export default function SearchBar({ className = "" }: { className?: string }) {
           if (e.key === "Enter") goToSearch(query);
         }}
         placeholder="Название товара или категории"
-        className="w-full rounded-full border border-black/10 bg-white px-4 py-2.5 text-sm shadow-sm outline-none focus:border-primary"
+        className="w-full rounded-[10px] border border-black/10 bg-white px-4 py-2.5 text-sm shadow-sm outline-none focus:border-primary"
       />
       {hasSuggestions && (
-        <div className="absolute left-0 right-0 top-full z-30 mt-2 overflow-hidden rounded-2xl border border-black/5 bg-white shadow-lg">
+        <div className="absolute left-0 right-0 top-full z-30 mt-2 overflow-hidden rounded-[10px] border border-black/5 bg-white shadow-lg">
           {suggestions.categories.length > 0 && (
             <div className="border-b border-black/5 p-2">
               <p className="px-2 pb-1 text-xs font-semibold uppercase text-muted">
@@ -85,7 +85,7 @@ export default function SearchBar({ className = "" }: { className?: string }) {
                 <button
                   key={c.id}
                   onClick={() => goToCategory(c.id)}
-                  className="flex w-full items-center gap-2 rounded-xl px-2 py-2 text-left text-sm hover:bg-primary/5"
+                  className="flex w-full items-center gap-2 rounded-[10px] px-2 py-2 text-left text-sm hover:bg-primary/5"
                 >
                   <span className="text-lg">{c.icon}</span>
                   <span>{c.name}</span>
@@ -102,7 +102,7 @@ export default function SearchBar({ className = "" }: { className?: string }) {
                 <button
                   key={p.id}
                   onClick={() => goToProduct(p.name)}
-                  className="flex w-full items-center justify-between gap-2 rounded-xl px-2 py-2 text-left text-sm hover:bg-primary/5"
+                  className="flex w-full items-center justify-between gap-2 rounded-[10px] px-2 py-2 text-left text-sm hover:bg-primary/5"
                 >
                   <span className="flex items-center gap-2">
                     <span className="text-lg">{p.icon}</span>

@@ -63,7 +63,7 @@ export default function CatalogClient() {
         <div className="flex items-center gap-2">
           <button
             onClick={() => setPickerOpen(true)}
-            className="flex-1 truncate rounded-full bg-primary px-4 py-2 text-left text-sm font-semibold text-white"
+            className="flex-1 truncate rounded-[10px] bg-primary px-4 py-2 text-left text-sm font-semibold text-white"
           >
             {searchQuery
               ? `🔍 Результаты по «${searchQuery}»`
@@ -74,7 +74,7 @@ export default function CatalogClient() {
           <button
             onClick={() => setPickerOpen(true)}
             aria-label="Выбрать категорию"
-            className="flex shrink-0 items-center gap-1 rounded-full bg-primary/10 px-3 py-2 text-sm font-semibold text-primary-dark"
+            className="flex shrink-0 items-center gap-1 rounded-[10px] bg-primary/10 px-3 py-2 text-sm font-semibold text-primary-dark"
           >
             <span aria-hidden>☰</span>
             <span className="hidden sm:inline">Категории</span>
@@ -89,7 +89,7 @@ export default function CatalogClient() {
           onClick={() => setPickerOpen(false)}
         >
           <div
-            className="w-full max-w-sm overflow-y-auto rounded-b-3xl bg-white p-4 shadow-xl"
+            className="w-full max-w-sm overflow-y-auto rounded-b-[10px] bg-white p-4 shadow-xl"
             style={{ maxHeight: "100%" }}
             onClick={(e) => e.stopPropagation()}
           >
@@ -106,7 +106,7 @@ export default function CatalogClient() {
             <div className="flex flex-col gap-1">
               <button
                 onClick={() => selectCategory(null)}
-                className={`rounded-xl px-3 py-2 text-left text-sm font-semibold ${
+                className={`rounded-[10px] px-3 py-2 text-left text-sm font-semibold ${
                   activeCategory === null
                     ? "bg-primary text-white"
                     : "hover:bg-primary/10 text-primary-dark"
@@ -118,7 +118,7 @@ export default function CatalogClient() {
                 <div key={c.id}>
                   <button
                     onClick={() => selectCategory(c.id)}
-                    className={`w-full rounded-xl px-3 py-2 text-left text-sm font-semibold ${
+                    className={`w-full rounded-[10px] px-3 py-2 text-left text-sm font-semibold ${
                       activeCategory === c.id
                         ? "bg-primary text-white"
                         : "hover:bg-primary/10 text-primary-dark"
@@ -132,7 +132,7 @@ export default function CatalogClient() {
                         <button
                           key={s.id}
                           onClick={() => selectCategory(s.id)}
-                          className={`rounded-xl px-3 py-2 text-left text-sm font-medium ${
+                          className={`rounded-[10px] px-3 py-2 text-left text-sm font-medium ${
                             activeCategory === s.id
                               ? "bg-primary text-white"
                               : "hover:bg-primary/10 text-muted"
@@ -166,11 +166,11 @@ export default function CatalogClient() {
 
       {searchQuery ? (
         <div className="fixed inset-x-0 bottom-5 z-40 flex justify-start pl-4 pr-28">
-          <div className="flex max-w-full items-center gap-2 rounded-full bg-primary-dark py-2 pl-3 pr-1.5 text-sm font-semibold text-white shadow-lg">
+          <div className="flex max-w-full items-center gap-2 rounded-[10px] bg-primary-dark py-2 pl-3 pr-1.5 text-sm font-semibold text-white shadow-lg">
             <span className="truncate">Поиск: «{searchQuery}»</span>
             <button
               onClick={clearSearch}
-              className="shrink-0 rounded-full bg-white/15 px-3 py-1 text-xs font-bold hover:bg-white/25"
+              className="shrink-0 rounded-[10px] bg-white/15 px-3 py-1 text-xs font-bold hover:bg-white/25"
             >
               Все ✕
             </button>
@@ -179,13 +179,13 @@ export default function CatalogClient() {
       ) : (
         activeCategoryObj && (
           <div className="fixed inset-x-0 bottom-5 z-40 flex justify-start pl-4 pr-28">
-            <div className="flex max-w-full items-center gap-2 rounded-full bg-primary-dark py-2 pl-3 pr-1.5 text-sm font-semibold text-white shadow-lg">
+            <div className="flex max-w-full items-center gap-2 rounded-[10px] bg-primary-dark py-2 pl-3 pr-1.5 text-sm font-semibold text-white shadow-lg">
               <span className="truncate">
                 Фильтр: {activeCategoryObj.icon} {activeCategoryObj.name}
               </span>
               <button
                 onClick={() => selectCategory(null)}
-                className="shrink-0 rounded-full bg-white/15 px-3 py-1 text-xs font-bold hover:bg-white/25"
+                className="shrink-0 rounded-[10px] bg-white/15 px-3 py-1 text-xs font-bold hover:bg-white/25"
               >
                 Все ✕
               </button>

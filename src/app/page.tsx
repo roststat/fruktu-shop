@@ -31,7 +31,7 @@ export default function Home() {
       {/* Hero */}
       <section className="bg-primary/5">
         <div className="mx-auto flex max-w-6xl flex-col items-center gap-6 px-4 py-12 text-center md:py-16">
-          <span className="rounded-full bg-white px-4 py-1 text-sm font-semibold text-primary-dark shadow-sm">
+          <span className="rounded-[10px] bg-white px-4 py-1 text-sm font-semibold text-primary-dark shadow-sm">
             г. Ялта · доставка в течение часа
           </span>
           <h1 className="max-w-2xl text-3xl font-extrabold leading-tight md:text-5xl">
@@ -43,7 +43,7 @@ export default function Home() {
           </p>
           <Link
             href="/catalog"
-            className="rounded-full bg-primary px-6 py-3 text-sm font-bold text-white shadow-sm"
+            className="rounded-[10px] bg-primary px-6 py-3 text-sm font-bold text-white shadow-sm"
           >
             Перейти в каталог
           </Link>
@@ -51,9 +51,9 @@ export default function Home() {
             <span aria-hidden>✅</span> У нас не обманывают
           </p>
           <div className="flex flex-wrap items-center justify-center gap-2 text-xs font-semibold text-primary-dark">
-            <span className="rounded-full bg-white px-3 py-1 shadow-sm">⚖️ Точный вес</span>
-            <span className="rounded-full bg-white px-3 py-1 shadow-sm">🥬 Свежие продукты</span>
-            <span className="rounded-full bg-white px-3 py-1 shadow-sm">💰 Реальная стоимость</span>
+            <span className="rounded-[10px] bg-white px-3 py-1 shadow-sm">⚖️ Точный вес</span>
+            <span className="rounded-[10px] bg-white px-3 py-1 shadow-sm">🥬 Свежие продукты</span>
+            <span className="rounded-[10px] bg-white px-3 py-1 shadow-sm">💰 Реальная стоимость</span>
           </div>
         </div>
       </section>
@@ -65,7 +65,7 @@ export default function Home() {
           {steps.map((step, i) => (
             <div
               key={step.title}
-              className="rounded-2xl border border-black/5 bg-card p-4 shadow-sm"
+              className="rounded-[10px] border border-black/5 bg-card p-4 shadow-sm"
             >
               <div className="mb-2 flex items-center gap-2">
                 <span className="text-2xl">{step.icon}</span>
@@ -105,7 +105,7 @@ export default function Home() {
             <Link
               key={c.id}
               href={`/catalog?category=${c.id}`}
-              className="flex items-center gap-3 rounded-2xl border border-black/5 bg-card p-3 shadow-sm hover:border-primary/30"
+              className="flex items-center gap-3 rounded-[10px] border border-black/5 bg-card p-3 shadow-sm hover:border-primary/30"
             >
               <span className="text-2xl">{c.icon}</span>
               <span className="text-sm font-semibold">{c.name}</span>

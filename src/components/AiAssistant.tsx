@@ -136,14 +136,14 @@ export default function AiAssistant() {
     <>
       <button
         onClick={openAssistant}
-        className="fixed bottom-32 right-5 z-40 flex items-center gap-2 rounded-full bg-gradient-to-r from-[#7c5cff] to-[#a78bfa] px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-[#7c5cff]/30 transition hover:shadow-xl"
+        className="fixed bottom-32 right-5 z-40 flex items-center gap-2 rounded-[10px] bg-gradient-to-r from-[#7c5cff] to-[#a78bfa] px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-[#7c5cff]/30 transition hover:shadow-xl"
       >
         <span className="text-lg" aria-hidden>
           ✨
         </span>
         <span className="hidden sm:inline">Рекомендации</span>
         {badgeCount > 0 && (
-          <span className="absolute -top-2 -right-2 flex h-6 min-w-6 items-center justify-center rounded-full border-2 border-white bg-tomato px-1 text-xs font-bold text-white">
+          <span className="absolute -top-2 -right-2 flex h-6 min-w-6 items-center justify-center rounded-[10px] border-2 border-white bg-tomato px-1 text-xs font-bold text-white">
             {badgeCount}
           </span>
         )}
@@ -157,7 +157,7 @@ export default function AiAssistant() {
             onClick={closeAssistant}
           >
             <div
-              className="relative flex max-h-[80vh] w-full max-w-sm flex-col overflow-hidden rounded-3xl bg-white shadow-2xl"
+              className="relative flex max-h-[80vh] w-full max-w-sm flex-col overflow-hidden rounded-[10px] bg-white shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="relative overflow-hidden bg-gradient-to-br from-[#7c5cff] to-[#a78bfa] p-4 text-white">
@@ -170,7 +170,7 @@ export default function AiAssistant() {
                       <span className="flex items-center gap-1.5">
                         <span aria-hidden>✨</span> Волшебные рекомендации
                       </span>
-                      <span className="rounded-full bg-white/20 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide">
+                      <span className="rounded-[10px] bg-white/20 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide">
                         beta
                       </span>
                     </h2>
@@ -180,7 +180,7 @@ export default function AiAssistant() {
                   </div>
                   <button
                     onClick={closeAssistant}
-                    className="shrink-0 rounded-full p-1 text-white/80 hover:bg-white/10"
+                    className="shrink-0 rounded-[10px] p-1 text-white/80 hover:bg-white/10"
                     aria-label="Закрыть"
                   >
                     ✕
@@ -198,7 +198,7 @@ export default function AiAssistant() {
                       {recommendations.map((product) => (
                         <div
                           key={product.id}
-                          className="flex items-center gap-3 rounded-2xl border border-[#7c5cff]/15 bg-[#7c5cff]/5 p-2"
+                          className="flex items-center gap-3 rounded-[10px] border border-[#7c5cff]/15 bg-[#7c5cff]/5 p-2"
                         >
                           <span className="text-xl">{product.icon}</span>
                           <div className="min-w-0 flex-1">
@@ -212,7 +212,7 @@ export default function AiAssistant() {
                           <div className="flex shrink-0 flex-col items-end gap-1">
                             <button
                               onClick={() => openPicker(product)}
-                              className="rounded-full bg-[#7c5cff] px-3 py-1 text-xs font-bold text-white hover:bg-[#6a4ce0]"
+                              className="rounded-[10px] bg-[#7c5cff] px-3 py-1 text-xs font-bold text-white hover:bg-[#6a4ce0]"
                             >
                               + Добавить
                             </button>
@@ -229,7 +229,7 @@ export default function AiAssistant() {
                       {visibleHouseholdTips.map((tip) => (
                         <div
                           key={tip.id}
-                          className="flex items-center gap-3 rounded-2xl border border-dashed border-black/10 p-2"
+                          className="flex items-center gap-3 rounded-[10px] border border-dashed border-black/10 p-2"
                         >
                           <span className="text-xl">{tip.icon}</span>
                           <div className="min-w-0 flex-1">
@@ -241,7 +241,7 @@ export default function AiAssistant() {
                           </div>
                           <button
                             onClick={() => handleToggleHousehold(tip.id)}
-                            className="shrink-0 rounded-full bg-accent/20 px-3 py-1 text-xs font-bold text-accent hover:bg-accent/30"
+                            className="shrink-0 rounded-[10px] bg-accent/20 px-3 py-1 text-xs font-bold text-accent hover:bg-accent/30"
                           >
                             Напомнить
                           </button>
@@ -256,11 +256,11 @@ export default function AiAssistant() {
                     <span aria-hidden>💬</span> Соберите заказ под бюджет или
                     рецепт
                   </p>
-                  <div className="flex flex-col gap-2 rounded-2xl bg-background p-3">
+                  <div className="flex flex-col gap-2 rounded-[10px] bg-background p-3">
                     {messages.map((m, i) => (
                       <div
                         key={i}
-                        className={`max-w-[85%] rounded-2xl px-3 py-2 text-sm ${
+                        className={`max-w-[85%] rounded-[10px] px-3 py-2 text-sm ${
                           m.role === "assistant"
                             ? "self-start bg-white text-foreground shadow-sm"
                             : "self-end bg-[#7c5cff] text-white"
@@ -287,11 +287,11 @@ export default function AiAssistant() {
                     if (e.key === "Enter") handleSendChat();
                   }}
                   placeholder="Например: ужин на 2 человек до 1000 ₽"
-                  className="flex-1 rounded-full border border-black/10 px-4 py-2 text-sm focus:border-[#7c5cff] focus:outline-none"
+                  className="flex-1 rounded-[10px] border border-black/10 px-4 py-2 text-sm focus:border-[#7c5cff] focus:outline-none"
                 />
                 <button
                   onClick={handleSendChat}
-                  className="rounded-full bg-gradient-to-r from-[#7c5cff] to-[#a78bfa] px-4 py-2 text-sm font-bold text-white"
+                  className="rounded-[10px] bg-gradient-to-r from-[#7c5cff] to-[#a78bfa] px-4 py-2 text-sm font-bold text-white"
                 >
                   ➤
                 </button>
@@ -311,7 +311,7 @@ export default function AiAssistant() {
                     </div>
                     <button
                       onClick={closeReplacePicker}
-                      className="shrink-0 rounded-full p-1 text-muted hover:bg-black/5"
+                      className="shrink-0 rounded-[10px] p-1 text-muted hover:bg-black/5"
                       aria-label="Закрыть"
                     >
                       ✕
@@ -323,7 +323,7 @@ export default function AiAssistant() {
                       <button
                         key={c.id}
                         onClick={() => setPickerCategoryId(c.id)}
-                        className={`shrink-0 rounded-full px-3 py-1.5 text-xs font-semibold ${
+                        className={`shrink-0 rounded-[10px] px-3 py-1.5 text-xs font-semibold ${
                           pickerCategoryId === c.id
                             ? "bg-[#7c5cff] text-white"
                             : "bg-[#7c5cff]/10 text-[#7c5cff]"
@@ -345,7 +345,7 @@ export default function AiAssistant() {
                         .map((product) => (
                           <div
                             key={product.id}
-                            className="flex items-center gap-3 rounded-2xl border border-black/5 p-2"
+                            className="flex items-center gap-3 rounded-[10px] border border-black/5 p-2"
                           >
                             <span className="text-xl">{product.icon}</span>
                             <div className="min-w-0 flex-1">
@@ -358,7 +358,7 @@ export default function AiAssistant() {
                             </div>
                             <button
                               onClick={() => openPicker(product)}
-                              className="shrink-0 rounded-full bg-[#7c5cff] px-3 py-1 text-xs font-bold text-white hover:bg-[#6a4ce0]"
+                              className="shrink-0 rounded-[10px] bg-[#7c5cff] px-3 py-1 text-xs font-bold text-white hover:bg-[#6a4ce0]"
                             >
                               Выбрать
                             </button>
@@ -375,7 +375,7 @@ export default function AiAssistant() {
                   onClick={() => setPickerProduct(null)}
                 >
                   <div
-                    className="w-full max-w-xs rounded-3xl bg-white p-4 shadow-2xl"
+                    className="w-full max-w-xs rounded-[10px] bg-white p-4 shadow-2xl"
                     onClick={(e) => e.stopPropagation()}
                   >
                     <div className="mb-3 flex items-center gap-3">
@@ -392,7 +392,7 @@ export default function AiAssistant() {
                         onClick={() =>
                           setPickerQty((q) => Math.max(pickerStep, round(q - pickerStep)))
                         }
-                        className="h-9 w-9 rounded-full bg-[#7c5cff]/10 text-lg font-bold text-[#7c5cff]"
+                        className="h-9 w-9 rounded-[10px] bg-[#7c5cff]/10 text-lg font-bold text-[#7c5cff]"
                       >
                         −
                       </button>
@@ -401,7 +401,7 @@ export default function AiAssistant() {
                       </span>
                       <button
                         onClick={() => setPickerQty((q) => round(q + pickerStep))}
-                        className="h-9 w-9 rounded-full bg-[#7c5cff]/10 text-lg font-bold text-[#7c5cff]"
+                        className="h-9 w-9 rounded-[10px] bg-[#7c5cff]/10 text-lg font-bold text-[#7c5cff]"
                       >
                         +
                       </button>
@@ -409,13 +409,13 @@ export default function AiAssistant() {
                     <div className="flex gap-2">
                       <button
                         onClick={() => setPickerProduct(null)}
-                        className="flex-1 rounded-full border border-black/10 px-4 py-2 text-sm font-bold text-foreground hover:bg-black/5"
+                        className="flex-1 rounded-[10px] border border-black/10 px-4 py-2 text-sm font-bold text-foreground hover:bg-black/5"
                       >
                         Отмена
                       </button>
                       <button
                         onClick={confirmAdd}
-                        className="flex-1 rounded-full bg-gradient-to-r from-[#7c5cff] to-[#a78bfa] px-4 py-2 text-sm font-bold text-white leading-tight"
+                        className="flex-1 rounded-[10px] bg-gradient-to-r from-[#7c5cff] to-[#a78bfa] px-4 py-2 text-sm font-bold text-white leading-tight"
                       >
                         <span className="block">Добавить</span>
                         <span className="block text-xs font-semibold text-white/80">

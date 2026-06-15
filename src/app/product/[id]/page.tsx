@@ -33,13 +33,13 @@ export default async function ProductPage({
       )}
 
       <div className="grid gap-6 md:grid-cols-2">
-        <div className="flex aspect-square items-center justify-center rounded-3xl bg-primary/5 text-9xl">
+        <div className="flex aspect-square items-center justify-center rounded-[10px] bg-primary/5 text-9xl">
           {product.icon}
         </div>
 
         <div className="flex flex-col gap-4">
           {product.seasonal && (
-            <span className="inline-flex w-fit items-center gap-1 rounded-full bg-accent/20 px-3 py-1 text-sm font-semibold text-accent">
+            <span className="inline-flex w-fit items-center gap-1 rounded-[10px] bg-accent/20 px-3 py-1 text-sm font-semibold text-accent">
               🌱 сейчас сезон
             </span>
           )}

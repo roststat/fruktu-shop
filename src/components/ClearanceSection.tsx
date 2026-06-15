@@ -5,9 +5,9 @@ export default function ClearanceSection() {
   const items = getClearanceProducts();
 
   return (
-    <section className="rounded-2xl border border-green-600/20 bg-green-600/5 p-3">
+    <section className="rounded-[10px] border border-green-600/20 bg-green-600/5 p-3">
       <div className="mb-3 flex items-center gap-2">
-        <span className="rounded-full bg-green-600 px-2.5 py-1 text-xs font-bold text-white">
+        <span className="rounded-[10px] bg-green-600 px-2.5 py-1 text-xs font-bold text-white">
           🏷️ Зелёные ценники
         </span>
         <h2 className="text-sm font-bold">

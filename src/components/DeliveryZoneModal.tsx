@@ -24,14 +24,14 @@ export default function DeliveryZoneModal({
       onClick={onClose}
     >
       <div
-        className="my-8 w-full max-w-md rounded-3xl bg-white p-6 shadow-xl"
+        className="my-8 w-full max-w-md rounded-[10px] bg-white p-6 shadow-xl"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="mb-3 flex items-start justify-between">
           <h2 className="text-lg font-bold">Зона доставки</h2>
           <button
             onClick={onClose}
-            className="rounded-full p-1 text-muted hover:bg-black/5"
+            className="rounded-[10px] p-1 text-muted hover:bg-black/5"
             aria-label="Закрыть"
           >
             ✕
@@ -41,7 +41,7 @@ export default function DeliveryZoneModal({
           Доставляем по г. Ялта и ближайшим посёлкам в течение часа после
           подтверждения заказа.
         </p>
-        <div className="flex h-48 items-center justify-center rounded-2xl bg-primary/10 text-center text-sm text-primary-dark">
+        <div className="flex h-48 items-center justify-center rounded-[10px] bg-primary/10 text-center text-sm text-primary-dark">
           Карта зоны доставки
           <br />
           (г. Ялта)
@@ -52,7 +52,7 @@ export default function DeliveryZoneModal({
         </p>
         <a
           href="tel:+79790474734"
-          className="mt-4 block rounded-full bg-primary px-4 py-2.5 text-center text-sm font-semibold text-white"
+          className="mt-4 block rounded-[10px] bg-primary px-4 py-2.5 text-center text-sm font-semibold text-white"
         >
           Уточнить по телефону: +7 979 047-47-34
         </a>

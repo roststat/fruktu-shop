@@ -114,7 +114,7 @@ export default function ListDrawer() {
             {step === "checkout" && (
               <button
                 onClick={() => setStep("list")}
-                className="rounded-full p-1 text-muted hover:bg-black/5"
+                className="rounded-[10px] p-1 text-muted hover:bg-black/5"
                 aria-label="Назад"
               >
                 ←
@@ -128,14 +128,14 @@ export default function ListDrawer() {
             {step === "list" && removedItems.length > 0 && (
               <button
                 onClick={() => setShowRemoved((v) => !v)}
-                className="rounded-full bg-black/5 px-3 py-1 text-xs font-semibold text-muted hover:bg-black/10"
+                className="rounded-[10px] bg-black/5 px-3 py-1 text-xs font-semibold text-muted hover:bg-black/10"
               >
                 Удалённые ({removedItems.length})
               </button>
             )}
             <button
               onClick={handleClose}
-              className="rounded-full p-1 text-muted hover:bg-black/5"
+              className="rounded-[10px] p-1 text-muted hover:bg-black/5"
               aria-label="Закрыть"
             >
               ✕
@@ -166,7 +166,7 @@ export default function ListDrawer() {
                 return (
                   <li
                     key={item.productId}
-                    className="flex items-center gap-3 rounded-2xl border border-black/5 bg-white p-2"
+                    className="flex items-center gap-3 rounded-[10px] border border-black/5 bg-white p-2"
                   >
                     <span className="text-xl">{product.icon}</span>
                     <div className="min-w-0 flex-1">
@@ -179,7 +179,7 @@ export default function ListDrawer() {
                     </div>
                     <button
                       onClick={() => restoreItem(item.productId)}
-                      className="shrink-0 rounded-full bg-primary/10 px-3 py-1 text-xs font-bold text-primary-dark hover:bg-primary/20"
+                      className="shrink-0 rounded-[10px] bg-primary/10 px-3 py-1 text-xs font-bold text-primary-dark hover:bg-primary/20"
                     >
                       Вернуть
                     </button>
@@ -214,7 +214,7 @@ export default function ListDrawer() {
                   return (
                     <li
                       key={item.productId}
-                      className="flex items-center gap-3 rounded-2xl border border-black/5 p-3"
+                      className="flex items-center gap-3 rounded-[10px] border border-black/5 p-3"
                     >
                       <span className="text-2xl">{product.icon}</span>
                       <div className="flex-1">
@@ -228,7 +228,7 @@ export default function ListDrawer() {
                           onClick={() =>
                             setQuantity(item.productId, round(item.quantity - step))
                           }
-                          className="h-7 w-7 rounded-full bg-primary/10 text-primary-dark"
+                          className="h-7 w-7 rounded-[10px] bg-primary/10 text-primary-dark"
                         >
                           −
                         </button>
@@ -239,7 +239,7 @@ export default function ListDrawer() {
                           onClick={() =>
                             setQuantity(item.productId, round(item.quantity + step))
                           }
-                          className="h-7 w-7 rounded-full bg-primary/10 text-primary-dark"
+                          className="h-7 w-7 rounded-[10px] bg-primary/10 text-primary-dark"
                         >
                           +
                         </button>
@@ -253,7 +253,7 @@ export default function ListDrawer() {
             {items.length > 0 && (
               <button
                 onClick={openAssistant}
-                className="relative mt-3 flex w-full items-center justify-center gap-2 overflow-hidden rounded-2xl bg-gradient-to-r from-[#7c5cff] to-[#a78bfa] px-4 py-3 text-sm font-bold text-white shadow-sm shadow-[#7c5cff]/30 hover:shadow-md"
+                className="relative mt-3 flex w-full items-center justify-center gap-2 overflow-hidden rounded-[10px] bg-gradient-to-r from-[#7c5cff] to-[#a78bfa] px-4 py-3 text-sm font-bold text-white shadow-sm shadow-[#7c5cff]/30 hover:shadow-md"
               >
                 <span className="pointer-events-none absolute -right-2 -top-3 text-4xl opacity-20" aria-hidden>
                   ✨
@@ -275,7 +275,7 @@ export default function ListDrawer() {
                 if (e.target.value.trim()) setAddressError(false);
               }}
               placeholder="Улица, дом, квартира / подъезд / этаж"
-              className={`w-full rounded-2xl border px-4 py-3 text-sm focus:outline-none ${
+              className={`w-full rounded-[10px] border px-4 py-3 text-sm focus:outline-none ${
                 addressError
                   ? "border-tomato focus:border-tomato"
                   : "border-black/10 focus:border-primary"
@@ -287,7 +287,7 @@ export default function ListDrawer() {
               </p>
             )}
 
-            <div className="mt-4 rounded-2xl bg-background p-3 text-sm">
+            <div className="mt-4 rounded-[10px] bg-background p-3 text-sm">
               <div className="flex items-center justify-between text-muted">
                 <span>Товаров: {totalCount}</span>
                 <span>{totalPrice} ₽</span>
@@ -324,7 +324,7 @@ export default function ListDrawer() {
             </div>
 
             {phoneRequested && (
-              <div className="mt-4 rounded-2xl bg-primary/10 p-3 text-sm text-primary-dark">
+              <div className="mt-4 rounded-[10px] bg-primary/10 p-3 text-sm text-primary-dark">
                 Заявка принята! Мы позвоним вам в ближайшее время, чтобы
                 уточнить заказ и сообщить точную сумму.
               </div>
@@ -371,7 +371,7 @@ export default function ListDrawer() {
                   : `Бесплатная доставка при заказе от ${FREE_DELIVERY_THRESHOLD} ₽ и весом до ${FREE_DELIVERY_WEIGHT_LIMIT} кг`}
               </p>
             )}
-            <div className="mb-3 flex items-start gap-2 rounded-2xl bg-primary/5 p-3 text-xs text-primary-dark">
+            <div className="mb-3 flex items-start gap-2 rounded-[10px] bg-primary/5 p-3 text-xs text-primary-dark">
               <span className="text-base leading-none">🤝</span>
               <span>
                 Соберём заказ так, чтобы его стоимость не превысила
@@ -380,7 +380,7 @@ export default function ListDrawer() {
             </div>
             <button
               onClick={() => setStep("checkout")}
-              className="w-full rounded-full bg-primary px-4 py-3 text-sm font-bold text-white"
+              className="w-full rounded-[10px] bg-primary px-4 py-3 text-sm font-bold text-white"
             >
               Отправить список
             </button>
@@ -399,21 +399,21 @@ export default function ListDrawer() {
             <div className="grid grid-cols-3 gap-2">
               <button
                 onClick={() => handleSend("telegram")}
-                className="flex flex-col items-center gap-1 rounded-2xl bg-[#229ED9]/10 px-2 py-3 text-xs font-semibold text-[#229ED9]"
+                className="flex flex-col items-center gap-1 rounded-[10px] bg-[#229ED9]/10 px-2 py-3 text-xs font-semibold text-[#229ED9]"
               >
                 <span className="text-2xl">✈️</span>
                 Telegram
               </button>
               <button
                 onClick={() => handleSend("max")}
-                className="flex flex-col items-center gap-1 rounded-2xl bg-accent/10 px-2 py-3 text-xs font-semibold text-accent"
+                className="flex flex-col items-center gap-1 rounded-[10px] bg-accent/10 px-2 py-3 text-xs font-semibold text-accent"
               >
                 <span className="text-2xl">🟣</span>
                 MAX
               </button>
               <button
                 onClick={() => handleSend("whatsapp")}
-                className="flex flex-col items-center gap-1 rounded-2xl bg-[#25D366]/10 px-2 py-3 text-xs font-semibold text-[#1da851]"
+                className="flex flex-col items-center gap-1 rounded-[10px] bg-[#25D366]/10 px-2 py-3 text-xs font-semibold text-[#1da851]"
               >
                 <span className="text-2xl">💬</span>
                 WhatsApp
@@ -422,7 +422,7 @@ export default function ListDrawer() {
 
             <button
               onClick={handlePhoneRequest}
-              className="mt-3 w-full rounded-full border border-black/10 px-4 py-3 text-sm font-bold text-foreground hover:bg-black/5"
+              className="mt-3 w-full rounded-[10px] border border-black/10 px-4 py-3 text-sm font-bold text-foreground hover:bg-black/5"
             >
               📞 Без мессенджера — позвоните мне
             </button>
