@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import {
   categories,
@@ -31,6 +31,15 @@ export default function CatalogClient() {
     setPickerOpen(false);
   };
 
+  useEffect(() => {
+    if (!pickerOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [pickerOpen]);
+
   return (
     <div className="mx-auto max-w-6xl px-4 py-6">
       <h1 className="mb-4 text-2xl font-extrabold">Каталог</h1>
@@ -40,11 +49,14 @@ export default function CatalogClient() {
         style={{ top: "var(--header-height, 0px)" }}
       >
         <div className="flex items-center gap-2">
-          <span className="flex-1 truncate rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white">
+          <button
+            onClick={() => setPickerOpen(true)}
+            className="flex-1 truncate rounded-full bg-primary px-4 py-2 text-left text-sm font-semibold text-white"
+          >
             {activeCategoryObj
               ? `${activeCategoryObj.icon} ${activeCategoryObj.name}`
               : "Все товары"}
-          </span>
+          </button>
           <button
             onClick={() => setPickerOpen(true)}
             aria-label="Выбрать категорию"
@@ -58,11 +70,13 @@ export default function CatalogClient() {
 
       {pickerOpen && (
         <div
-          className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 sm:items-center"
+          className="fixed inset-x-0 bottom-0 z-50 flex justify-center bg-black/40"
+          style={{ top: "var(--header-height, 0px)" }}
           onClick={() => setPickerOpen(false)}
         >
           <div
-            className="max-h-[80vh] w-full max-w-sm overflow-y-auto rounded-t-3xl bg-white p-4 sm:rounded-3xl"
+            className="w-full max-w-sm overflow-y-auto rounded-b-3xl bg-white p-4 shadow-xl"
+            style={{ maxHeight: "100%" }}
             onClick={(e) => e.stopPropagation()}
           >
             <div className="mb-3 flex items-center justify-between">

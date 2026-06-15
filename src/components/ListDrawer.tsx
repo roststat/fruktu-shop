@@ -9,6 +9,7 @@ const round = (n: number) => Math.round(n * 10) / 10;
 
 const FREE_DELIVERY_THRESHOLD = 3000;
 const DELIVERY_COST = 300;
+const FREE_DELIVERY_WEIGHT_LIMIT = 15;
 
 const SHOP_PHONE = "79790474734";
 
@@ -20,6 +21,7 @@ export default function ListDrawer() {
     setQuantity,
     totalPrice,
     totalCount,
+    totalWeight,
     removedItems,
     restoreItem,
     clearRemoved,
@@ -42,10 +44,15 @@ export default function ListDrawer() {
 
   if (!isOpen) return null;
 
+  const isOverWeightLimit = totalWeight > FREE_DELIVERY_WEIGHT_LIMIT;
   const deliveryCost =
-    items.length === 0 || totalPrice >= FREE_DELIVERY_THRESHOLD
+    items.length === 0
       ? 0
-      : DELIVERY_COST;
+      : isOverWeightLimit
+        ? DELIVERY_COST
+        : totalPrice >= FREE_DELIVERY_THRESHOLD
+          ? 0
+          : DELIVERY_COST;
   const grandTotal = totalPrice + deliveryCost;
 
   const handleClose = () => {
@@ -282,6 +289,12 @@ export default function ListDrawer() {
                 <span>{totalPrice} ₽</span>
               </div>
               <div className="mt-1 flex items-center justify-between text-muted">
+                <span>Общий вес</span>
+                <span className={isOverWeightLimit ? "font-semibold text-tomato" : ""}>
+                  ~{round(totalWeight)} кг
+                </span>
+              </div>
+              <div className="mt-1 flex items-center justify-between text-muted">
                 <span>Доставка по Ялте</span>
                 {deliveryCost === 0 ? (
                   <span className="font-semibold text-primary-dark">
@@ -299,7 +312,9 @@ export default function ListDrawer() {
               </div>
               {deliveryCost > 0 && (
                 <p className="mt-1 text-xs text-muted">
-                  Бесплатная доставка при заказе от {FREE_DELIVERY_THRESHOLD} ₽
+                  {isOverWeightLimit
+                    ? `Доставка платная: вес заказа превышает ${FREE_DELIVERY_WEIGHT_LIMIT} кг`
+                    : `Бесплатная доставка при заказе от ${FREE_DELIVERY_THRESHOLD} ₽ и весом до ${FREE_DELIVERY_WEIGHT_LIMIT} кг`}
                 </p>
               )}
             </div>
@@ -318,6 +333,12 @@ export default function ListDrawer() {
             <div className="mb-1 flex items-center justify-between text-sm text-muted">
               <span>Товаров: {totalCount}</span>
               <span>{totalPrice} ₽</span>
+            </div>
+            <div className="mb-1 flex items-center justify-between text-sm text-muted">
+              <span>Общий вес</span>
+              <span className={isOverWeightLimit ? "font-semibold text-tomato" : ""}>
+                ~{round(totalWeight)} кг
+              </span>
             </div>
             <div className="mb-1 flex items-center justify-between text-sm text-muted">
               <span>Доставка по Ялте</span>
@@ -341,7 +362,9 @@ export default function ListDrawer() {
             </div>
             {deliveryCost > 0 && (
               <p className="mb-3 text-xs text-muted">
-                Бесплатная доставка при заказе от {FREE_DELIVERY_THRESHOLD} ₽
+                {isOverWeightLimit
+                  ? `Доставка платная: вес заказа превышает ${FREE_DELIVERY_WEIGHT_LIMIT} кг`
+                  : `Бесплатная доставка при заказе от ${FREE_DELIVERY_THRESHOLD} ₽ и весом до ${FREE_DELIVERY_WEIGHT_LIMIT} кг`}
               </p>
             )}
             <div className="mb-3 flex items-start gap-2 rounded-2xl bg-primary/5 p-3 text-xs text-primary-dark">

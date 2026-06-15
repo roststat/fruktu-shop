@@ -426,3 +426,19 @@ export function getQuantityStep(product: Product): number {
 export function formatQuantity(product: Product, quantity: number): string {
   return isWeightProduct(product) ? `${quantity.toFixed(1)} кг` : `${quantity}`;
 }
+
+const DEFAULT_ITEM_WEIGHT_KG = 0.3;
+
+export function getItemWeightKg(product: Product, quantity: number): number {
+  if (product.unit === "кг") return quantity;
+
+  const match = product.unit.match(/^([\d.]+)\s*(кг|г|л|мл)$/);
+  if (!match) return quantity * DEFAULT_ITEM_WEIGHT_KG;
+
+  const value = parseFloat(match[1]);
+  const unit = match[2];
+  const kgPerUnit =
+    unit === "кг" ? value : unit === "г" || unit === "мл" ? value / 1000 : value;
+
+  return quantity * kgPerUnit;
+}

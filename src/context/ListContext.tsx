@@ -7,7 +7,7 @@ import {
   useMemo,
   useState,
 } from "react";
-import { getProductById } from "@/data/catalog";
+import { getProductById, getItemWeightKg } from "@/data/catalog";
 
 interface ListItem {
   productId: string;
@@ -25,6 +25,7 @@ interface ListContextValue {
   getQuantity: (productId: string) => number;
   totalCount: number;
   totalPrice: number;
+  totalWeight: number;
   removedItems: ListItem[];
   restoreItem: (productId: string) => void;
   clearRemoved: () => void;
@@ -125,6 +126,15 @@ export function ListProvider({ children }: { children: React.ReactNode }) {
     [items]
   );
 
+  const totalWeight = useMemo(
+    () =>
+      items.reduce((sum, i) => {
+        const product = getProductById(i.productId);
+        return sum + (product ? getItemWeightKg(product, i.quantity) : 0);
+      }, 0),
+    [items]
+  );
+
   const value: ListContextValue = {
     items,
     isOpen,
@@ -136,6 +146,7 @@ export function ListProvider({ children }: { children: React.ReactNode }) {
     getQuantity,
     totalCount,
     totalPrice,
+    totalWeight,
     removedItems,
     restoreItem,
     clearRemoved,
