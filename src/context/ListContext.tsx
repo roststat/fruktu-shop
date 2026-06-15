@@ -24,6 +24,7 @@ interface ListContextValue {
   setQuantity: (productId: string, quantity: number) => void;
   getQuantity: (productId: string) => number;
   totalCount: number;
+  totalQuantity: number;
   totalPrice: number;
   totalWeight: number;
   removedItems: ListItem[];
@@ -117,6 +118,11 @@ export function ListProvider({ children }: { children: React.ReactNode }) {
 
   const totalCount = useMemo(() => items.length, [items]);
 
+  const totalQuantity = useMemo(
+    () => items.reduce((sum, i) => sum + i.quantity, 0),
+    [items]
+  );
+
   const totalPrice = useMemo(
     () =>
       items.reduce((sum, i) => {
@@ -145,6 +151,7 @@ export function ListProvider({ children }: { children: React.ReactNode }) {
     setQuantity,
     getQuantity,
     totalCount,
+    totalQuantity,
     totalPrice,
     totalWeight,
     removedItems,

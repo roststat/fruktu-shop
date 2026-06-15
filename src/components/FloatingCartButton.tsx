@@ -4,19 +4,19 @@ import { useEffect, useRef, useState } from "react";
 import { useList } from "@/context/ListContext";
 
 export default function FloatingCartButton() {
-  const { totalCount, openList } = useList();
+  const { totalCount, totalQuantity, openList } = useList();
   const [justAdded, setJustAdded] = useState(false);
-  const prevCountRef = useRef(totalCount);
+  const prevQuantityRef = useRef(totalQuantity);
 
   useEffect(() => {
-    if (totalCount > prevCountRef.current) {
+    if (totalQuantity > prevQuantityRef.current) {
       setJustAdded(true);
       const timer = setTimeout(() => setJustAdded(false), 1500);
-      prevCountRef.current = totalCount;
+      prevQuantityRef.current = totalQuantity;
       return () => clearTimeout(timer);
     }
-    prevCountRef.current = totalCount;
-  }, [totalCount]);
+    prevQuantityRef.current = totalQuantity;
+  }, [totalQuantity]);
 
   return (
     <div className="fixed bottom-5 right-5 z-40 flex items-center gap-2">
