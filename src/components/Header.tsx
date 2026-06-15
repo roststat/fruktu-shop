@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import SearchBar from "./SearchBar";
+import CategoryMenu from "./CategoryMenu";
 import DeliveryZoneModal from "./DeliveryZoneModal";
 
 export default function Header() {
@@ -46,7 +47,8 @@ export default function Header() {
             </span>
           </Link>
 
-          <div className="hidden flex-1 md:block md:max-w-md">
+          <div className="hidden flex-1 items-center gap-2 md:flex md:max-w-md">
+            <CategoryMenu />
             <SearchBar />
           </div>
 
@@ -89,7 +91,8 @@ export default function Header() {
           </a>
         </div>
 
-        <div className="md:hidden">
+        <div className="flex items-center gap-2 md:hidden">
+          <CategoryMenu />
           <SearchBar />
         </div>
       </div>
