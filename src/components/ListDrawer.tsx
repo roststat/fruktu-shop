@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useList } from "@/context/ListContext";
 import { useAiAssistant } from "@/context/AiAssistantContext";
-import { getProductById, formatQuantity, getQuantityStep } from "@/data/catalog";
+import { getProductById, getCartProductById, formatQuantity, getQuantityStep } from "@/data/catalog";
 import ClearanceSection from "./ClearanceSection";
 
 const round = (n: number) => Math.round(n * 10) / 10;
@@ -64,9 +64,10 @@ export default function ListDrawer() {
 
   const buildMessage = () => {
     const lines = items.map((item) => {
-      const product = getProductById(item.productId);
-      if (!product) return null;
-      return `• ${product.name} — ${formatQuantity(product, item.quantity)}`;
+      const entry = getCartProductById(item.productId);
+      if (!entry) return null;
+      const label = entry.isClearance ? " (зелёный ценник)" : "";
+      return `• ${entry.product.name}${label} — ${formatQuantity(entry.product, item.quantity)}`;
     });
     return [
       "Список покупок «Схожу на рынок»:",
@@ -207,20 +208,30 @@ export default function ListDrawer() {
             ) : (
               <ul className="flex flex-col gap-3">
                 {items.map((item) => {
-                  const product = getProductById(item.productId);
-                  if (!product) return null;
+                  const entry = getCartProductById(item.productId);
+                  if (!entry) return null;
+                  const { product, price, isClearance } = entry;
                   const step = getQuantityStep(product);
-                  const itemPrice = Math.round(product.price * item.quantity);
+                  const itemPrice = Math.round(price * item.quantity);
                   return (
                     <li
                       key={item.productId}
-                      className="flex items-center gap-3 rounded-[10px] border border-black/5 p-3"
+                      className={`flex items-center gap-3 rounded-[10px] border p-3 ${
+                        isClearance
+                          ? "border-green-600/20 bg-green-600/5"
+                          : "border-black/5"
+                      }`}
                     >
                       <span className="text-2xl">{product.icon}</span>
                       <div className="flex-1">
                         <p className="text-sm font-semibold">{product.name}</p>
+                        {isClearance && (
+                          <span className="mb-0.5 inline-flex w-fit items-center gap-1 rounded-[10px] bg-green-600 px-1.5 py-0.5 text-[10px] font-bold text-white">
+                            🏷️ Зелёный ценник
+                          </span>
+                        )}
                         <p className="text-xs text-muted">
-                          {product.price} ₽ / {product.unit} · {itemPrice} ₽
+                          {price} ₽ / {product.unit} · {itemPrice} ₽
                         </p>
                       </div>
                       <div className="flex items-center gap-2">

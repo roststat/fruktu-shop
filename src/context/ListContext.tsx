@@ -7,7 +7,7 @@ import {
   useMemo,
   useState,
 } from "react";
-import { getProductById, getItemWeightKg } from "@/data/catalog";
+import { getCartProductById, getItemWeightKg } from "@/data/catalog";
 
 interface ListItem {
   productId: string;
@@ -126,8 +126,8 @@ export function ListProvider({ children }: { children: React.ReactNode }) {
   const totalPrice = useMemo(
     () =>
       items.reduce((sum, i) => {
-        const product = getProductById(i.productId);
-        return sum + (product ? Math.round(product.price * i.quantity) : 0);
+        const entry = getCartProductById(i.productId);
+        return sum + (entry ? Math.round(entry.price * i.quantity) : 0);
       }, 0),
     [items]
   );
@@ -135,8 +135,8 @@ export function ListProvider({ children }: { children: React.ReactNode }) {
   const totalWeight = useMemo(
     () =>
       items.reduce((sum, i) => {
-        const product = getProductById(i.productId);
-        return sum + (product ? getItemWeightKg(product, i.quantity) : 0);
+        const entry = getCartProductById(i.productId);
+        return sum + (entry ? getItemWeightKg(entry.product, i.quantity) : 0);
       }, 0),
     [items]
   );

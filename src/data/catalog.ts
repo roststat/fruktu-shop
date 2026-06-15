@@ -416,6 +416,31 @@ export function getProductById(id: string): Product | undefined {
   return products.find((p) => p.id === id);
 }
 
+/** Cart items for clearance ("зелёный ценник") products use this id suffix
+ * so they're tracked as a separate position from the regular product. */
+export const CLEARANCE_SUFFIX = "-clearance";
+
+export function getClearanceCartId(productId: string): string {
+  return `${productId}${CLEARANCE_SUFFIX}`;
+}
+
+export interface CartProduct {
+  product: Product;
+  price: number;
+  isClearance: boolean;
+}
+
+export function getCartProductById(id: string): CartProduct | undefined {
+  if (id.endsWith(CLEARANCE_SUFFIX)) {
+    const product = getProductById(id.slice(0, -CLEARANCE_SUFFIX.length));
+    if (!product?.clearance) return undefined;
+    return { product, price: product.clearance.price, isClearance: true };
+  }
+  const product = getProductById(id);
+  if (!product) return undefined;
+  return { product, price: product.price, isClearance: false };
+}
+
 export function getCategoryById(id: string): Category | undefined {
   for (const c of categories) {
     if (c.id === id) return c;

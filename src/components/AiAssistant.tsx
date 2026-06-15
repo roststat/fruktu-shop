@@ -136,7 +136,7 @@ export default function AiAssistant() {
     <>
       <button
         onClick={openAssistant}
-        className="fixed bottom-32 right-5 z-40 flex items-center gap-2 rounded-[10px] bg-gradient-to-r from-[#7c5cff] to-[#a78bfa] px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-[#7c5cff]/30 transition hover:shadow-xl"
+        className="fixed bottom-32 right-5 z-40 flex items-center gap-2 rounded-full bg-gradient-to-r from-[#7c5cff] to-[#a78bfa] px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-[#7c5cff]/30 transition hover:shadow-xl"
       >
         <span className="text-lg" aria-hidden>
           ✨
