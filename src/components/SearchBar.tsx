@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { categories, products } from "@/data/catalog";
 
@@ -24,6 +24,17 @@ export default function SearchBar({ className = "" }: { className?: string }) {
 
     return { products: matchedProducts, categories: matchedCategories };
   }, [query]);
+
+  useEffect(() => {
+    if (!focused) return;
+    const handleClickOutside = (e: MouseEvent) => {
+      if (!containerRef.current?.contains(e.target as Node)) {
+        setFocused(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [focused]);
 
   const hasSuggestions =
     focused &&
@@ -49,7 +60,6 @@ export default function SearchBar({ className = "" }: { className?: string }) {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         onFocus={() => setFocused(true)}
-        onBlur={() => setTimeout(() => setFocused(false), 150)}
         placeholder="Название товара или категории"
         className="w-full rounded-full border border-black/10 bg-white px-4 py-2.5 text-sm shadow-sm outline-none focus:border-primary"
       />
