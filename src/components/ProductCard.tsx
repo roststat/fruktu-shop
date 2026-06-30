@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import {
   Product,
   formatQuantity,
@@ -21,9 +22,19 @@ export default function ProductCard({ product }: { product: Product }) {
     <div className="flex flex-col rounded-[10px] border border-black/5 bg-card p-3 shadow-sm">
       <Link
         href={`/product/${product.id}`}
-        className="flex aspect-square items-center justify-center rounded-[10px] bg-primary/5 text-5xl"
+        className="relative flex aspect-square items-center justify-center overflow-hidden rounded-[10px] bg-primary/5 text-5xl"
       >
-        {product.icon}
+        {product.image ? (
+          <Image
+            src={product.image}
+            alt={product.name}
+            fill
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+            className="object-cover"
+          />
+        ) : (
+          product.icon
+        )}
       </Link>
       {product.seasonal && (
         <span className="mt-2 inline-flex w-fit items-center gap-1 rounded-[10px] bg-accent/20 px-2 py-0.5 text-xs font-semibold text-accent">
